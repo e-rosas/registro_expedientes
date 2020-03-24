@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expediente;
+use App\Http\Requests\ExpedienteRequest;
 use Illuminate\Http\Request;
 
 class ExpedienteController extends Controller
@@ -14,7 +15,7 @@ class ExpedienteController extends Controller
      */
     public function index()
     {
-        //
+        return view('expedientes.index', ['expedientes' => Expediente::paginate(15)]);
     }
 
     /**
@@ -24,7 +25,7 @@ class ExpedienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('expedientes.create');
     }
 
     /**
@@ -33,9 +34,12 @@ class ExpedienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpedienteRequest $request)
     {
-        //
+        $validados = $request->validated();
+        Expediente::create($validados);
+
+        return redirect()->route('expedientes.index')->withStatus(__('Expediente registrado exitosamente.'));
     }
 
     /**

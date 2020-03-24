@@ -37,5 +37,5 @@ class Expediente extends Model
         'updated_at',
         'first_consultation_date',
         'last_consultation_date',
-    ]
+    ];
 }
