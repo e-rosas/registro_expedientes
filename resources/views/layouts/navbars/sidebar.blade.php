@@ -46,12 +46,12 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> Inicio
+                        <i class="fas fa-home text-primary"></i> Inicio
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('expedientes.index') }}">
-                        <i class="ni ni-key-25 text-info"></i>Expedientes
+                        <i class="fas fa-folder-open text-info"></i>Expedientes
                     </a>
                 </li>
             </ul>

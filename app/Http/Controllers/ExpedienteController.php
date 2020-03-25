@@ -54,6 +54,17 @@ class ExpedienteController extends Controller
         return redirect()->route('expedientes.index')->withStatus(__('Expediente registrado exitosamente.'));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)
+            ->paginate(10)
+        ;
+
+        return view('expedientes.index', compact('expedientes'));
+    }
+
     /**
      * Display the specified resource.
      *
