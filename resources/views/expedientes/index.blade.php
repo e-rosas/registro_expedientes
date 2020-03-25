@@ -66,20 +66,24 @@
                                         <td>{{ $expediente->last_consultation_date->format('l jS \\of F Y') }}</td>
                                         <td>
                                             {{ $expediente->destruido() }}
-                                            <!-- <input type="checkbox" {{ ($expediente->destroyed ? 'checked' : '')  }} class="custom-control-input" data-id="{{ $expediente->id }}">
-                                            <label class="custom-control-label" for="customCheck1">Destruir</label> -->
+                                            {{-- <input type="checkbox" {{ ($expediente->destroyed ? 'checked' : '')  }} class="custom-control-input" data-id="{{ $expediente->id }}">
+                                            <label class="custom-control-label" for="customCheck1">Destruir</label> --}}
                                         </td>
                                         <td class="text-right">
-                                            <button class="btn btn-icon btn-info btn-sm" type="button" href="{{ route('expedientes.edit', $expediente) }}">
+                                            <a class="btn btn-icon btn-info btn-sm" type="button" href="{{route('expedientes.edit', $expediente)}}">
                                                 <span class="btn-inner--icon">
                                                     <i class="fas fa-pencil-alt fa-2"></i>
                                                 </span>
-                                            </button>
-                                            <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button" href="{{ route('expedientes.destroy', $expediente) }}">
-                                                <span class="btn-inner--icon">
-                                                    <i class="fa fa-trash"></i>
-                                                </span>
-                                            </button>
+                                            </a>
+                                            {{-- <form method="POST" action="{{ route('expedientes.destroy', $expediente) }}" >
+                                                @method('DELETE')
+                                                @csrf
+                                                <a rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button" href="{{ route('expedientes.destroy', $expediente) }}">
+                                                    <span class="btn-inner--icon">
+                                                        <i class="fa fa-trash"></i>
+                                                    </span>
+                                                </a>
+                                            </form> --}}
 
                                         </td>
                                     </tr>

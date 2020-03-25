@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Expediente;
 use App\Http\Requests\ExpedienteRequest;
+use App\Http\Requests\UpdateExpedienteRequest;
 use Illuminate\Http\Request;
 
 class ExpedienteController extends Controller
@@ -84,7 +85,7 @@ class ExpedienteController extends Controller
      */
     public function edit(Expediente $expediente)
     {
-        //
+        return view('expedientes.edit', compact('expediente'));
     }
 
     /**
@@ -94,9 +95,25 @@ class ExpedienteController extends Controller
      * @param  \App\Expediente  $expediente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Expediente $expediente)
+    public function update(UpdateExpedienteRequest $request, Expediente $expediente)
     {
-        //
+        $validated = $request->validated();
+        if (!isset($request['insured'])) {
+            $validated['insured'] = 0;
+        } else {
+            $validated['insured'] = 1;
+        }
+
+        if (!isset($request['destroyed'])) {
+            $validated['destroyed'] = 0;
+        } else {
+            $validated['destroyed'] = 1;
+        }
+        $expediente->fill($validated);
+        $expediente->save();
+
+        return redirect()->route('expedientes.edit', compact('expediente'))
+            ->withStatus(__('Expediente modificado exitosamente.'));
     }
 
     /**
@@ -107,6 +124,9 @@ class ExpedienteController extends Controller
      */
     public function destroy(Expediente $expediente)
     {
-        //
+        $expediente->delete();
+
+        return redirect()->route('expedientes.index')
+            ->withStatus(__('Expediente eliminado exitosamente.'));
     }
 }
