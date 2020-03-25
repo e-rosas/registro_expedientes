@@ -15,7 +15,7 @@ class CreateExpedientesTable extends Migration
     {
         Schema::create('expedientes', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name')->index();
+            $table->string('full_name', '180')->index();
             $table->date('birth_date');
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
