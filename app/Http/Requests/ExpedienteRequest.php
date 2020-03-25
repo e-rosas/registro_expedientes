@@ -25,12 +25,10 @@ class ExpedienteRequest extends FormRequest
     {
         return [
             'full_name' => 'required|max:250|min:5',
-            'birth_date' => 'date_equals:|required',
+            'birth_date' => 'date|required',
             'comments' => 'max:500',
             'phone_number' => 'max:255',
-            'email' => 'max:255|email',
-            'insured' => 'boolean|required',
-            'destroyed' => 'boolean|required',
+            'email' => 'max:255',
             'last_consultation_date' => 'required|date',
             'first_consultation_date' => 'required|date|lte:last_consultation_date'
         ];

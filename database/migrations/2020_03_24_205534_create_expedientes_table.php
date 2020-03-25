@@ -22,7 +22,7 @@ class CreateExpedientesTable extends Migration
             $table->boolean('insured');
             $table->date('first_consultation_date');
             $table->date('last_consultation_date');
-            $table->text('comments');
+            $table->text('comments')->nullable();
             $table->boolean('destroyed')->default(0);
             $table->timestamps();
         });

@@ -1,11 +1,7 @@
 @extends('layouts.app', ['title' => 'Expedientes'])
 
 @section('content')
-    @include('components.header', [
-        'title' => 'Expedientes',
-        'description' => 'Lista de expedientes',
-        'class' => 'col-lg-7'
-    ])
+    @include('components.header')
 
     <div class="container-fluid mt--7">
 
@@ -26,8 +22,8 @@
                     <form  method="post" action="{{ route('expedientes.search') }}" >
                         @csrf
                         <div class="form-group col-md-12 col-auto">
-                            <label for="example-search-input" class="form-control-label">Search</label>
-                            <input name="search" class="form-control" type="search" required placeholder="Search expedientes..." id="search">
+                            <label for="example-search-input" class="form-control-label">Buscar</label>
+                            <input name="search" class="form-control" type="search" required placeholder="Buscar expedientes..." id="search">
                         </div>
                     </form>
 
@@ -48,7 +44,7 @@
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de nacimiento</th>
                                     <th scope="col">Teléfono</th>
-                                    <th scope="col">Correo</th>
+                                    <th scope="col">Fecha registro</th>
                                     <th scope="col">Asegurado</th>
                                     <th scope="col">Primera Consulta</th>
                                     <th scope="col">Última Consulta</th>
@@ -63,13 +59,15 @@
                                         <td>{{ $expediente->birth_date->format('Y-m-d') }}</td>
                                         <td>{{ $expediente->phone_number }}</td>
                                         <td>
-                                            <a href="mailto:{{$expediente->email}}">{{ $expediente->email }}</a>
+                                            {{ $expediente->updated_at->format('l jS \\of F Y') }}
                                         </td>
                                         <td>{{ $expediente->asegurado() }}</td>
-                                        <td>{{ $expediente->first_consultation_date->format('l jS \\de F Y') }}</td>
-                                        <td>{{ $expediente->last_consultation_date->format('l jS \\de F Y') }}</td>
+                                        <td>{{ $expediente->first_consultation_date->format('l jS \\of F Y') }}</td>
+                                        <td>{{ $expediente->last_consultation_date->format('l jS \\of F Y') }}</td>
                                         <td>
-                                            <input type="checkbox" {{ ($expediente->destroyed ? 'checked' : '')  }} class="custom-control-input" data-id="{{ $expediente->id }}">
+                                            {{ $expediente->destruido() }}
+                                            <!-- <input type="checkbox" {{ ($expediente->destroyed ? 'checked' : '')  }} class="custom-control-input" data-id="{{ $expediente->id }}">
+                                            <label class="custom-control-label" for="customCheck1">Destruir</label> -->
                                         </td>
                                         <td class="text-right">
                                             <button class="btn btn-icon btn-info btn-sm" type="button" href="{{ route('expedientes.edit', $expediente) }}">

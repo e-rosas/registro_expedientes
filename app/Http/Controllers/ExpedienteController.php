@@ -37,6 +37,18 @@ class ExpedienteController extends Controller
     public function store(ExpedienteRequest $request)
     {
         $validados = $request->validated();
+        if (!isset($request['insured'])) {
+            $validados['insured'] = 0;
+        } else {
+            $validados['insured'] = 1;
+        }
+
+        if (!isset($request['destroyed'])) {
+            $validados['destroyed'] = 0;
+        } else {
+            $validados['destroyed'] = 1;
+        }
+
         Expediente::create($validados);
 
         return redirect()->route('expedientes.index')->withStatus(__('Expediente registrado exitosamente.'));

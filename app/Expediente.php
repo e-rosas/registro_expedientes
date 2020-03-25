@@ -38,4 +38,21 @@ class Expediente extends Model
         'first_consultation_date',
         'last_consultation_date',
     ];
+
+    public function asegurado()
+    {
+        if ($this->insured) {
+            return "Si";
+        } else {
+            return "No";
+        }
+    }
+    public function destruido()
+    {
+        if ($this->destroyed) {
+            return "Si";
+        } else {
+            return "No";
+        }
+    }
 }
