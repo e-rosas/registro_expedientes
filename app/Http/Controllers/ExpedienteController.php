@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Expediente;
 use App\Http\Requests\ExpedienteRequest;
 use App\Http\Requests\UpdateExpedienteRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ExpedienteController extends Controller
@@ -128,5 +129,30 @@ class ExpedienteController extends Controller
 
         return redirect()->route('expedientes.index')
             ->withStatus(__('Expediente eliminado exitosamente.'));
+    }
+
+    public function listView()
+    {
+        $end = Carbon::today()->addDay();
+        $start = Carbon::today()->subWeeks(2);
+        $expedientes = $this->getExpedientes($start, $end);
+
+        return view('expedientes.lista', compact('expedientes', 'start', 'end'));
+    }
+
+    public function list(Request $request)
+    {
+        $start = new Carbon($request['start_date']);
+        $end = new Carbon($request['end_date']);
+
+        $expedientes = $this->getExpedientes($start, $end);
+        return view('expedientes.lista', compact('expedientes', 'start', 'end'));
+    }
+
+    private function getExpedientes($start, $end)
+    {
+        return Expediente::whereBetween('updated_at', [$start, $end])
+            ->where('destroyed', 1)
+            ->get();
     }
 }

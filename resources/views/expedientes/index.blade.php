@@ -10,10 +10,13 @@
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-md-4">
                                 <h3 class="mb-0">{{ __('Expedientes') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
+                            <div class="col-md-4">
+                                <a href="{{ route('expedientes.listar') }}" class="btn btn-sm btn-primary">Lista de expedientes simple</a>
+                            </div>
+                            <div class="col-md-4 text-right">
                                 <a href="{{ route('expedientes.create') }}" class="btn btn-sm btn-primary">Agregar nuevo expediente</a>
                             </div>
                         </div>
