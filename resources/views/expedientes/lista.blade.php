@@ -49,7 +49,7 @@
                     </div>
                     <div class="card-body">
                         @foreach ($expedientes as $expediente)
-                        <p>{{ $expediente->full_name .' - '. $expediente->last_consultation_date->format('d-m-Y') }}</p>
+                        <p>{{ $expediente->full_name .' - '. $expediente->birth_date->format('d-m-Y') }}</p>
 
                         @endforeach
                     </div>

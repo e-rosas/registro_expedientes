@@ -8,8 +8,6 @@ class CreateExpedientesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -19,9 +17,8 @@ class CreateExpedientesTable extends Migration
             $table->date('birth_date');
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
-            $table->boolean('insured');
-            $table->date('first_consultation_date');
-            $table->date('last_consultation_date');
+            $table->integer('year');
+            $table->integer('year_difference');
             $table->text('comments')->nullable();
             $table->boolean('destroyed')->default(0);
             $table->timestamps();
@@ -30,8 +27,6 @@ class CreateExpedientesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

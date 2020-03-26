@@ -11,48 +11,43 @@ class Expediente extends Model
         'birth_date',
         'phone_number',
         'email',
-        'insured',
-        'first_consultation_date',
-        'last_consultation_date',
+        'year',
+        'year_difference',
         'comments',
-        'destroyed'
+        'destroyed',
     ];
     /**
-    * The attributes that should be casted to native types.
-    *
-    * @var array
-    */
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'id' => 'integer',
+        'year' => 'integer',
+        'year_difference' => 'integer',
         'full_name' => 'string',
         'comments' => 'string',
         'phone_number' => 'string',
         'email' => 'string',
-        'insured' => 'boolean',
         'destroyed' => 'boolean',
     ];
     protected $dates = [
         'birth_date',
         'created_at',
         'updated_at',
-        'first_consultation_date',
-        'last_consultation_date',
     ];
 
-    public function asegurado()
+    public function diferencia()
     {
-        if ($this->insured) {
-            return "Si";
-        } else {
-            return "No";
-        }
+        return $this->year_difference.' '.'años';
     }
+
     public function destruido()
     {
         if ($this->destroyed) {
-            return "Si";
-        } else {
-            return "No";
+            return 'Si';
         }
+
+        return 'No';
     }
 }

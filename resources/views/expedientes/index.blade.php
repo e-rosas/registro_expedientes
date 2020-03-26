@@ -46,11 +46,11 @@
                                 <tr>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de nacimiento</th>
+                                    <th scope="col">Correo</th>
                                     <th scope="col">Teléfono</th>
-                                    <th scope="col">Fecha registro</th>
-                                    <th scope="col">Asegurado</th>
-                                    <th scope="col">Primera Consulta</th>
-                                    <th scope="col">Última Consulta</th>
+                                    <th scope="col">Fecha de destruccion</th>
+                                    <th scope="col">Año</th>
+                                    <th scope="col">Diferencia</th>
                                     <th scope="col">Destruido</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -60,18 +60,16 @@
                                     <tr>
                                         <td>{{ $expediente->full_name }}</td>
                                         <td>{{ $expediente->birth_date->format('Y-m-d') }}</td>
+                                        <td>
+                                            <a href="mailto:{{$expediente->email}}">{{ $expediente->email }}</a>
+                                        </td>
                                         <td>{{ $expediente->phone_number }}</td>
                                         <td>
                                             {{ $expediente->updated_at->format('l jS \\of F Y') }}
                                         </td>
-                                        <td>{{ $expediente->asegurado() }}</td>
-                                        <td>{{ $expediente->first_consultation_date->format('l jS \\of F Y') }}</td>
-                                        <td>{{ $expediente->last_consultation_date->format('l jS \\of F Y') }}</td>
-                                        <td>
-                                            {{ $expediente->destruido() }}
-                                            {{-- <input type="checkbox" {{ ($expediente->destroyed ? 'checked' : '')  }} class="custom-control-input" data-id="{{ $expediente->id }}">
-                                            <label class="custom-control-label" for="customCheck1">Destruir</label> --}}
-                                        </td>
+                                        <td>{{ $expediente->year }}</td>
+                                        <td>{{ $expediente->diferencia()}}</td>
+                                        <td>{{ $expediente->destruido() }}</td>
                                         <td class="text-right">
                                             <a class="btn btn-icon btn-info btn-sm" type="button" href="{{route('expedientes.edit', $expediente)}}">
                                                 <span class="btn-inner--icon">

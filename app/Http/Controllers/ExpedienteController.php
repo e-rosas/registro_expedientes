@@ -33,27 +33,19 @@ class ExpedienteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(ExpedienteRequest $request)
     {
-        $validados = $request->validated();
-        if (!isset($request['insured'])) {
-            $validados['insured'] = 0;
-        } else {
-            $validados['insured'] = 1;
-        }
+        $validated = $request->validated();
+        $validated['destroyed'] = 1;
+        $validated['year_difference'] = $this->calculateYearDifference($validated['year']);
 
-        if (!isset($request['destroyed'])) {
-            $validados['destroyed'] = 0;
-        } else {
-            $validados['destroyed'] = 1;
-        }
+        Expediente::create($validated);
 
-        Expediente::create($validados);
-
-        return redirect()->route('expedientes.index')->withStatus(__('Expediente registrado exitosamente.'));
+        return redirect()->route('expedientes.create')->withStatus(__('Expediente registrado exitosamente.'));
     }
 
     public function search(Request $request)
@@ -70,18 +62,15 @@ class ExpedienteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Expediente  $expediente
      * @return \Illuminate\Http\Response
      */
     public function show(Expediente $expediente)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Expediente  $expediente
      * @return \Illuminate\Http\Response
      */
     public function edit(Expediente $expediente)
@@ -92,35 +81,25 @@ class ExpedienteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Expediente  $expediente
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateExpedienteRequest $request, Expediente $expediente)
     {
         $validated = $request->validated();
-        if (!isset($request['insured'])) {
-            $validated['insured'] = 0;
-        } else {
-            $validated['insured'] = 1;
-        }
-
-        if (!isset($request['destroyed'])) {
-            $validated['destroyed'] = 0;
-        } else {
-            $validated['destroyed'] = 1;
-        }
+        $validated['year_difference'] = $this->calculateYearDifference($validated['year']);
         $expediente->fill($validated);
         $expediente->save();
 
         return redirect()->route('expedientes.edit', compact('expediente'))
-            ->withStatus(__('Expediente modificado exitosamente.'));
+            ->withStatus(__('Expediente modificado exitosamente.'))
+        ;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Expediente  $expediente
      * @return \Illuminate\Http\Response
      */
     public function destroy(Expediente $expediente)
@@ -128,7 +107,8 @@ class ExpedienteController extends Controller
         $expediente->delete();
 
         return redirect()->route('expedientes.index')
-            ->withStatus(__('Expediente eliminado exitosamente.'));
+            ->withStatus(__('Expediente eliminado exitosamente.'))
+        ;
     }
 
     public function listView()
@@ -146,13 +126,22 @@ class ExpedienteController extends Controller
         $end = new Carbon($request['end_date']);
 
         $expedientes = $this->getExpedientes($start, $end);
+
         return view('expedientes.lista', compact('expedientes', 'start', 'end'));
+    }
+
+    private function calculateYearDifference($year)
+    {
+        $now = Carbon::today();
+
+        return $now->year - $year;
     }
 
     private function getExpedientes($start, $end)
     {
         return Expediente::whereBetween('updated_at', [$start, $end])
             ->where('destroyed', 1)
-            ->get();
+            ->get()
+        ;
     }
 }

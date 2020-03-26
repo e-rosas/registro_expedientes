@@ -18,6 +18,16 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="col-12">
+                            @if (session('status'))
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    {{ session('status') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                        </div>
                         <form method="post" action="{{ route('expedientes.store') }}"  autocomplete="off">
                             @csrf
 
@@ -27,7 +37,8 @@
                                 <div class="form-row">
                                     <div class="form-group{{ $errors->has('full_name') ? ' has-danger' : '' }} col-md-12">
                                         <label class="form-control-label" for="input-full_name">Nombre</label>
-                                        <input type="text" name="full_name" id="input-full_name" class="form-control form-control-alternative{{ $errors->has('full_name') ? ' is-invalid' : '' }}" placeholder="Nombre completo" value="{{ old('full_name') }}" required autofocus>
+                                        <input type="text" name="full_name" id="input-full_name" class="form-control form-control-alternative{{ $errors->has('full_name') ? ' is-invalid' : '' }}"
+                                         placeholder="Nombre completo" value="{{ old('full_name') }}" required autofocus>
 
                                         @if ($errors->has('full_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -55,30 +66,7 @@
                                     </div>
 
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-4  {{ $errors->has('insured') ? ' has-danger' : '' }}">
-
-                                        <input type="checkbox"  name="insured" id="input-insured" class="custom-control-input {{ $errors->has('insured') ? ' is-invalid' : '' }}" value="{{ old('insured') }}">
-                                        <label class="custom-control-label" for="input-insured">Asegurado</label>
-                                        @if ($errors->has('insured'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('insured') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-4  {{ $errors->has('destroyed') ? ' has-danger' : '' }}">
-
-                                        <input type="checkbox" checked name="destroyed" id="input-destroyed" class="custom-control-input {{ $errors->has('destroyed') ? ' is-invalid' : '' }}" value="{{ old('destroyed') }}">
-                                        <label class="custom-control-label" for="input-destroyed">Destruido</label>
-                                        @if ($errors->has('destroyed'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('destroyed') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
+                                
                                 {{--  phone_number, email --}}
                                 <div class="form-row">
                                     <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-6">
@@ -104,33 +92,13 @@
                                 </div>
                                 {{--  Dates, destroyed --}}
                                 <div class="form-row">
-                                    <div class="form-group{{ $errors->has('first_consultation_date') ? ' has-danger' : '' }} col-md-4 col-auto">
-                                        <label class="form-control-label" for="input-first_consultation_date">Fecha de Primera Consulta</label>
-                                        <div class="input-group input-group-alternative">
-                                            <div class="input-group-prepend">
-                                                <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                            </div>
-                                            <input name="first_consultation_date" id="input-first_consultation_date" class="form-control form-control-alternative{{ $errors->has('first_consultation_date') ? ' is-invalid' : '' }}"
-                                             value="{{ old('first_consultation_date') }}" type="date" required>
-                                        </div>
-                                        @if ($errors->has('first_consultation_date'))
+                                    <div class="form-group{{ $errors->has('year') ? ' has-danger' : '' }} col-md-4 col-auto">
+                                        <label class="form-control-label" for="input-year">Año</label>
+                                        <input type="numeric" name="year" id="input-year" class="form-control form-control-alternative{{ $errors->has('year') ? ' is-invalid' : '' }}"
+                                                    placeholder="Año de caja" value="{{ old('year') }}" required>
+                                        @if ($errors->has('year'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('first_consultation_date') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group{{ $errors->has('last_consultation_date') ? ' has-danger' : '' }} col-md-4">
-                                        <label class="form-control-label" for="input-last_consultation_date">Fecha de Última Consulta</label>
-                                        <div class="input-group input-group-alternative">
-                                            <div class="input-group-prepend">
-                                                <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                            </div>
-                                            <input name="last_consultation_date" id="input-last_consultation_date" class="form-control form-control-alternative{{ $errors->has('last_consultation_date') ? ' is-invalid' : '' }}"
-                                             value="{{ old('last_consultation_date') }}"  type="date" required>
-                                        </div>
-                                        @if ($errors->has('last_consultation_date'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('last_consultation_date') }}</strong>
+                                                <strong>{{ $errors->first('year') }}</strong>
                                             </span>
                                         @endif
                                     </div>

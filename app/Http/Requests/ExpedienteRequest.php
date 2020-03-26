@@ -29,8 +29,7 @@ class ExpedienteRequest extends FormRequest
             'comments' => 'max:500',
             'phone_number' => 'max:255',
             'email' => 'max:180',
-            'last_consultation_date' => 'required|date',
-            'first_consultation_date' => 'required|date|lte:last_consultation_date'
+            'year' => 'required|numeric',
         ];
     }
 }
