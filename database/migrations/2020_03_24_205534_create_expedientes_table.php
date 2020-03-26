@@ -16,6 +16,7 @@ class CreateExpedientesTable extends Migration
             $table->string('full_name', '180')->index();
             $table->date('birth_date');
             $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
             $table->string('email')->nullable();
             $table->integer('year');
             $table->integer('year_difference');

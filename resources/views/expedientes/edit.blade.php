@@ -68,7 +68,7 @@
                                 </div>
                                 {{--  phone_number, email --}}
                                 <div class="form-row">
-                                    <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-6">
+                                    <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-3">
                                         <label class="form-control-label" for="input-phone_number">Teléfono (opcional)</label>
                                         <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}"
                                          placeholder="Teléfono opcional" value="{{ $expediente->phone_number }}">
@@ -79,7 +79,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-md-6">
+                                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-md-3">
                                         <label class="form-control-label" for="input-email">Correo (opcional)</label>
                                         <input type="text" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                          placeholder="Correo opcional" value="{{ $expediente->email }}">
@@ -87,6 +87,17 @@
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }} col-md-6">
+                                        <label class="form-control-label" for="input-address">Direccion (opcional)</label>
+                                        <input type="text" name="address" id="input-address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}"
+                                         placeholder="Correo opcional" value="{{ $expediente->address }}">
+                                    
+                                        @if ($errors->has('address'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('address') }}</strong>
                                             </span>
                                         @endif
                                     </div>

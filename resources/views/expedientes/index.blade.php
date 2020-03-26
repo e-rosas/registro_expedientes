@@ -46,6 +46,7 @@
                                 <tr>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de nacimiento</th>
+                                    <th scope="col">Direccion</th>
                                     <th scope="col">Correo</th>
                                     <th scope="col">Teléfono</th>
                                     <th scope="col">Fecha de destruccion</th>
@@ -60,12 +61,13 @@
                                     <tr>
                                         <td>{{ $expediente->full_name }}</td>
                                         <td>{{ $expediente->birth_date->format('Y-m-d') }}</td>
+                                        <td>{{ $expediente->address }}</td>
                                         <td>
                                             <a href="mailto:{{$expediente->email}}">{{ $expediente->email }}</a>
                                         </td>
                                         <td>{{ $expediente->phone_number }}</td>
                                         <td>
-                                            {{ $expediente->updated_at->format('l jS \\of F Y') }}
+                                            {{ $expediente->updated_at->format('Y-m-d') }}
                                         </td>
                                         <td>{{ $expediente->year }}</td>
                                         <td>{{ $expediente->diferencia()}}</td>

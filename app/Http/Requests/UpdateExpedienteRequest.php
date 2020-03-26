@@ -28,6 +28,7 @@ class UpdateExpedienteRequest extends FormRequest
             'birth_date' => 'date|required',
             'comments' => 'max:500',
             'phone_number' => 'max:255',
+            'address' => 'max:255',
             'email' => 'max:180',
             'year' => 'required|numeric',
         ];
