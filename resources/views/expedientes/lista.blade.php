@@ -48,8 +48,9 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <h2>Cantidad: {{ count($expedientes) }}</h2>
                         @foreach ($expedientes as $expediente)
-                        <p>{{ $expediente->full_name .' - '. $expediente->birth_date->format('d-m-Y') }}</p>
+                        <p>{{ $expediente->full_name }}</p>
 
                         @endforeach
                     </div>
