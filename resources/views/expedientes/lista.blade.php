@@ -54,9 +54,18 @@
 
                         @endforeach
                     </div>
-
-
-
+                    <div class="card-footer">
+                        <form method="POST" action="{{ route('expedientes.destruir') }}">
+                            @csrf
+                            <input type="hidden" name="end_date" value="{{ $end->format('Y-m-d') }}">
+                            <input type="hidden" name="start_date" value="{{ $start->format('Y-m-d') }}">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Destruir
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

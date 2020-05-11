@@ -40,7 +40,7 @@ class ExpedienteController extends Controller
     public function store(ExpedienteRequest $request)
     {
         $validated = $request->validated();
-        $validated['destroyed'] = 1;
+        $validated['destroyed'] = 0;
         $validated['year_difference'] = $this->calculateYearDifference($validated['year']);
 
         Expediente::create($validated);
@@ -130,6 +130,21 @@ class ExpedienteController extends Controller
         return view('expedientes.lista', compact('expedientes', 'start', 'end'));
     }
 
+    public function destroyList(Request $request)
+    {
+        $start = new Carbon($request['start_date']);
+        $end = new Carbon($request['end_date']);
+
+        $expedientes = $this->getExpedientes($start, $end);
+
+        foreach ($expedientes as $expediente) {
+            $expediente->destroyed = 1;
+            $expediente->save();
+        }
+
+        return redirect()->route('expedientes.index')->withStatus(__('Expedientes marcados como destruidos exitosamente.'));
+    }
+
     private function calculateYearDifference($year)
     {
         $now = Carbon::today();
@@ -139,8 +154,8 @@ class ExpedienteController extends Controller
 
     private function getExpedientes($start, $end)
     {
-        return Expediente::whereBetween('updated_at', [$start, $end])
-            ->where('destroyed', 1)
+        return Expediente::whereBetween('created_at', [$start, $end])
+            ->where('destroyed', 0)
             ->get()
         ;
     }
