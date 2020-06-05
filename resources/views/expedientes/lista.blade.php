@@ -50,7 +50,7 @@
                     <div class="card-body">
                         <h2>Cantidad: {{ count($expedientes) }}</h2>
                         @foreach ($expedientes as $expediente)
-                        <p>{{ $expediente->full_name }},{{ $expediente->phone_number }}</p>
+                        <p>{{ $expediente->full_name }},{{ $expediente->phone_number ?? '' }}</p>
 
                         @endforeach
                     </div>
