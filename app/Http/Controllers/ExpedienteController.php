@@ -155,7 +155,6 @@ class ExpedienteController extends Controller
     private function getExpedientes($start, $end)
     {
         return Expediente::whereBetween('created_at', [$start, $end])
-            ->where('destroyed', 0)
             ->get()
         ;
     }
