@@ -29,4 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+
+    Route::get('calls', 'CallController@index')->name('calls.index');
+    Route::post('calls/add', 'CallController@store')->name('calls.store');
+    Route::post('calls/find', 'CallController@find')->name('calls.find');
+    Route::patch('calls/update', 'CallController@update')->name('calls.update');
+    Route::delete('calls/destroy', 'CallController@delete')->name('calls.destroy');
 });

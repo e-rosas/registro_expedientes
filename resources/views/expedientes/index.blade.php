@@ -46,10 +46,10 @@
                                 <tr>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de nacimiento</th>
-                                    <th scope="col">Direccion</th>
+                                    <th scope="col">Dirección</th>
                                     <th scope="col">Correo</th>
                                     <th scope="col">Teléfono</th>
-                                    <th scope="col">Fecha de destruccion</th>
+                                    <th scope="col">Fecha de destrucción</th>
                                     <th scope="col">Año</th>
                                     <th scope="col">Diferencia</th>
                                     <th scope="col">Destruido</th>

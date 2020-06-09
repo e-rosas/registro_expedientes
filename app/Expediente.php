@@ -52,4 +52,9 @@ class Expediente extends Model
 
         return 'No';
     }
+
+    public function calls()
+    {
+        return $this->hasMany('App\Call');
+    }
 }

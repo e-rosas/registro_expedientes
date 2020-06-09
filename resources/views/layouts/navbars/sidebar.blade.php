@@ -54,6 +54,11 @@
                         <i class="fas fa-folder-open text-info"></i>Expedientes
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('calls.index') }}">
+                        <i class="fas fa-phone mr-2 text-purple"></i> Llamadas
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
