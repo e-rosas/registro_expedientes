@@ -66,6 +66,10 @@ class ExpedienteController extends Controller
      */
     public function show(Expediente $expediente)
     {
+        $expediente->load('calls');
+        $today = Carbon::today();
+
+        return view('expedientes.show', compact(['expediente', 'today']));
     }
 
     /**

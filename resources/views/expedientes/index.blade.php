@@ -59,7 +59,11 @@
                             <tbody>
                                 @foreach ($expedientes as $expediente)
                                     <tr>
-                                        <td>{{ $expediente->full_name }}</td>
+                                        <td>
+                                            <a href="{{ route('expedientes.show', $expediente) }}">
+                                                {{ $expediente->full_name}}
+                                            </a>
+                                        </td>
                                         <td>{{ $expediente->birth_date->format('Y-m-d') }}</td>
                                         <td>{{ $expediente->address }}</td>
                                         <td>

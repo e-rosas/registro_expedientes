@@ -79,8 +79,16 @@ class CallController extends Controller
     public function store(CallRequest $request)
     {
         $validated = $request->validated();
-        $validated['number'] = 'C'.$validated['expediente_id'].'-'.rand(1, 1000);
-        Call::create($validated);
+        $call = new Call();
+        $call->status = $validated['status'];
+        if (0 == $validated['status']) {
+            $call->next_date = $validated['next_date'];
+        }
+        $call->number = 'C'.$validated['expediente_id'].'-'.rand(1, 1000);
+        $call->comments = $validated['comments'];
+        $call->date = $validated['date'];
+        $call->expediente_id = $validated['expediente_id'];
+        $call->save();
 
         return $this->expedienteCalls($request->expediente_id);
     }

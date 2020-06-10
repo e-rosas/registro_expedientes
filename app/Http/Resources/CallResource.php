@@ -24,8 +24,8 @@ class CallResource extends JsonResource
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('d-M-Y'),
             'date2' => $this->date->format('Y-m-d'),
-            'next_date' => is_null($this->next_date) ? '' : $this->next_date->format('d-M-Y'),
-            'next_date2' => is_null($this->next_date) ? '' : $this->next_date->format('Y-m-d'),
+            'next_date' => (0 == $this->status) ? $this->next_date->format('d-M-Y') : '',
+            'next_date2' => (0 == $this->status) ? $this->next_date->format('Y-m-d') : '',
         ];
     }
 }

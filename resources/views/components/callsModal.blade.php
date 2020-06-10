@@ -1,69 +1,58 @@
 <div class="modal fade" id="modal-call" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
                         <h6 class="heading-small text-muted mb-4">{{ __('Agregar llamada') }}</h6>
-                        <h4>{{ $expediente->phone_number }}</h4>
+                        <h4>Teléfono de paciente: {{ $expediente->phone_number }}</h4>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
-                            <div class="form-group">
-                                {{--  Number --}}
-                                {{--  <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                        </div>
-                                        <input type="number" name="number" id="input-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                        placeholder="Number" required>
-                                        @if ($errors->has('number'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('number') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>  --}}
-                                {{--  Invoice  --}}
-                                {{--  <div class="form-group">
-                                    <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
-                                        <option value='0'>{{ __('Seleccionar factura') }}</option>
-                                    </select>
-                                </div>  --}}
+                            <div class="form-row">
                                 {{--  Date  --}}
-                                <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        </div>
-                                        <input type="date" name="date" id="input-call-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                <div class="col-lg-12 form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
+                                    <label for="date">Fecha de llamada</label>
+                                    <input type="date" name="date" id="input-call-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
                                         value="{{ $today->format('Y-m-d')}}" required>
                                         @if ($errors->has('date'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('date') }}</strong>
                                             </span>
                                         @endif
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 {{--  status  --}}
-                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                <div class="col-lg-12 form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
                                         <select class="form-control" id="input-status">
-                                            <option value="0">{{ __('En proceso') }}</option>
-                                            <option value="1">{{ __('Deducibles') }}</option>
-                                            <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
-                                            <option value="3">{{ __('Pagada') }}</option>
-                                            <option value="4">{{ __('Negada por ') }}</option>
-                                            <option value="5">{{ __('Otro') }}</option>
-                                          </select>
+                                            <option value='0' >{{ __('Paciente vendrá') }}</option>
+                                            <option value='1' >{{ __('Paciente no vendrá') }}</option>
+                                            <option value='2' >{{ __('Otro') }}</option>
+                                        </select>
                                     </div>
                                 </div>
+                            </div>
+                                
+                            <div class="form-row">
+                                <div class="col-lg-12 form-group {{ $errors->has('next-date') ? ' has-danger' : '' }}">
+                                    <label for="date">Fecha de llamada</label>
+                                    <input type="date" name="next-date" id="input-next-date" class="form-control {{ $errors->has('next-date') ? ' is-invalid' : '' }}"
+                                        value="{{ $today->addMonth()->format('Y-m-d')}}" required>
+                                        @if ($errors->has('next-date'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('next-date') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 {{--  comments  --}}
-                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                <div class="col-lg-12 form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
@@ -77,9 +66,11 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="text-center">
-                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
-                                </div>
+                            </div>
+                                
+                            <div class="text-center">
+                                <button id="save_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -93,20 +84,19 @@
 
 <script>
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    function sendCall(number, claim, date,
-    comments, status){
+    function sendCall(date,
+    comments, status, next_date){
         $.ajax({
             url: "{{route('calls.store')}}",
             dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "number": number,
-                "claim": claim,
                 "date": date,
                 "comments": comments,
                 "status": status,
-                'invoice_id': {{ $invoice_id }},
+                "next_date": next_date,
+                'expediente_id': {{ $expediente_id }},
             },
         success: function (response) {
             displayCalls(response.data);
@@ -130,11 +120,10 @@
 
         for(var i = 0; i < calls.length; i++){
             output += "<tr value="+calls[i].id+">"
-                + "<td>" + calls[i].number + "</td>"
-                + "<td>" + calls[i].invoice + "</td>"
+                + "<td>" + (i+1) + "</td>"
                 + "<td>" + calls[i].date + "</td>"
-                + "<td>" + calls[i].claim + "</td>"
                 + "<td>" + calls[i].status + "</td>"
+                + "<td>" + calls[i].next_date + "</td>"
                 + "<td>" + calls[i].comments+ "</td>"
                 +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
                 +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
@@ -142,16 +131,14 @@
         }
 
         $('#calls_table tbody').html(output);
-        setCallCount();
     }
 
     $("#save_call").click(function(){
-        var number = document.getElementById("input-number").value;
-        var claim = document.getElementById("input-claim").value;
         var date = document.getElementById("input-call-date").value;
         var comments = document.getElementById("input-call-comments").value;
         var status = document.getElementById("input-status").value;
-        sendCall(number, claim, date, comments, status);
+        var next_date = document.getElementById("input-next-date").value;
+        sendCall(date, comments, status, next_date);
 
 
     });

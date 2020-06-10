@@ -3,40 +3,36 @@
     <table id="calls_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Número') }}</th>
-                <th scope="col">{{ __('Factura') }}</th>
-                <th scope="col">{{ __('Fecha') }}</th>
-                <th scope="col">{{ __('Claim') }}</th>
-                <th scope="col">{{ __('Estado') }}</th>
-                <th scope="col">{{ __('Comentarios') }}</th>
+                <th scope="col">Número</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha que vendrá</th>
+                <th scope="col">Comentarios</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($calls as $call)
+            
+            @for ($i = 0; $i < count($calls); $i++)
+                
                 <tr>
-                    <td>{{ $call->number}}</td>
-                    <td>
-                        <a href="{{ route('invoices.show', $call->invoice) }}">
-                            {{ $call->invoice->number}}
-                        </a>
-                    </td>
-                    <td>{{ $call->date->format('d-M-Y')}}</td>
-                    <td>{{ $call->claim }}</td>
-                    <td>{{ $call->status() }}</td>
-                    <td>{{ $call->comments }}</td>
+                    <td>{{ $i+1 }}</td>
+                    <td>{{ $calls[$i]->date->format('d-M-Y')}}</td>
+                    <td>{{ $calls[$i]->status() }}</td>
+                    <td>{{ (0 == $calls[$i]->status) ? $calls[$i]->next_date->format('d-M-Y') : '' }}</td>
+                    <td>{{ $calls[$i]->comments }}</td>
                     <td class="text-right">
-                        <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $call->id }})">
+                        <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $calls[$i]->id }})">
                             <span class="btn-inner--icon">
                                 <i class="fas fa-pencil-alt fa-2 "></i>
                             </span>
                         </button>
-                        <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall({{ $call->id }})">
+                        <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall({{ $calls[$i]->id }})">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
                 </tr>
-            @endforeach
+            @endfor
         </tbody>
     </table>
 </div>

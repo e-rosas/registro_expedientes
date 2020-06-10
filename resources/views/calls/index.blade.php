@@ -32,8 +32,8 @@
                                 <label for="status">{{ __('Estado') }}</label>
                                 <select id='status' class="custom-select" name="status"> 
                                     <option value='6'  {{ $status == 6 ? 'selected' : '' }}>Todas</option>
-                                    <option value='0' {{ $status == 0 ? 'selected' : '' }}>{{ __('Paciente vendra') }}</option>
-                                    <option value='1' {{ $status == 1 ? 'selected' : '' }}>{{ __('Paciente no vendra') }}</option>
+                                    <option value='0' {{ $status == 0 ? 'selected' : '' }}>{{ __('Paciente vendrá') }}</option>
+                                    <option value='1' {{ $status == 1 ? 'selected' : '' }}>{{ __('Paciente no vendrá') }}</option>
                                     <option value='2' {{ $status == 5 ? 'selected' : '' }}>{{ __('Otro') }}</option>
                                 </select>
                             </div>

@@ -2,11 +2,12 @@
     <table class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Número') }}</th>
-                <th scope="col">{{ __('Expediente') }}</th>
-                <th scope="col">{{ __('Fecha') }}</th>
-                <th scope="col">{{ __('Estado') }}</th>
-                <th scope="col">{{ __('Comentarios') }}</th>
+                <th scope="col">Número</th>
+                <th scope="col">Expediente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha que vendrá</th>
+                <th scope="col">Comentarios</th>
             </tr>
         </thead>
         <tbody>
@@ -19,12 +20,8 @@
                         </a>
                     </td>
                     <td>{{ $call->date->format('d-M-Y')}}</td>
-                    <td>
-                        <a href="{{ route('invoices.show', $call->invoice) }}">
-                            {{ $call->invoice->code}}
-                        </a>
-                    </td>
                     <td>{{ $call->status() }}</td>
+                    <td>{{ (0 == $call->status) ? $call->next_date->format('d-M-Y') : '' }}</td>
                     <td>{{ $call->comments }}</td>
                 </tr>
             @endforeach
