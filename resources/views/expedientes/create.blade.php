@@ -66,7 +66,7 @@
                                     </div>
 
                                 </div>
-                                
+
                                 {{--  phone_number, email --}}
                                 <div class="form-row">
                                     <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-3">
@@ -92,7 +92,7 @@
                                     <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }} col-md-6">
                                         <label class="form-control-label" for="input-address">Direccion (opcional)</label>
                                         <input type="text" name="address" id="input-address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="Correo opcional" value="{{ old('address') }}">
-                                    
+
                                         @if ($errors->has('address'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('address') }}</strong>
@@ -111,6 +111,11 @@
                                                 <strong>{{ $errors->first('year') }}</strong>
                                             </span>
                                         @endif
+                                    </div>
+                                    {{--  Insured  --}}
+                                    <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                        <input type="checkbox" name="insured" id="input-insured" class="custom-control-input">
+                                        <label class="custom-control-label" for="input-insured">Aseguranza</label>
                                     </div>
                                 </div>
                                 <div class="form-row">

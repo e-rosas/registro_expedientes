@@ -16,6 +16,8 @@ class Expediente extends Model
         'year_difference',
         'comments',
         'destroyed',
+        'insured',
+        'destroyed_at',
     ];
     /**
      * The attributes that should be casted to native types.
@@ -32,11 +34,13 @@ class Expediente extends Model
         'phone_number' => 'string',
         'email' => 'string',
         'destroyed' => 'boolean',
+        'insured' => 'boolean',
     ];
     protected $dates = [
         'birth_date',
         'created_at',
         'updated_at',
+        'destroyed_at',
     ];
 
     public function diferencia()

@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('Expedientes') }}</h3>
                             </div>
                             <div class="col-md-4">
-                                <a href="{{ route('expedientes.listar') }}" class="btn btn-sm btn-primary">Lista de expedientes simple</a>
+                                <a href="{{ route('expedientes.list') }}" class="btn btn-sm btn-primary">Lista de expedientes simple</a>
                             </div>
                             <div class="col-md-4 text-right">
                                 <a href="{{ route('expedientes.create') }}" class="btn btn-sm btn-primary">Agregar nuevo expediente</a>
@@ -22,11 +22,31 @@
                         </div>
                     </div>
 
-                    <form  method="post" action="{{ route('expedientes.search') }}" >
-                        @csrf
+                    <form  method="get" action="{{ route('expedientes.index') }}" >
+                        <div class="form-row">
+                            <div class="col-lg-2 col-auto">
+                                <label for="perPage">{{ __('Cantidad') }}</label>
+                                <select id="quantity" class="custom-select" name="perPage">
+                                    <option value='15' {{ $perPage == 15 ? 'selected' : '' }}>15</option>
+                                    <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
+                                    <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                                    <option value='100' {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                    <option value='150' {{ $perPage == 150 ? 'selected' : '' }}>150</option>
+                                    <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-5">
+                                <label for="insured">{{ __('Aseguranza') }}</label>
+                                <select id='insured' class="custom-select" name="insured">
+                                    <option value='2' {{ $insured == 2 ? 'selected' : '' }}>Ambos</option>
+                                    <option value='0' {{ $insured == 0 ? 'selected' : '' }}>Sin aseguranza.</option>
+                                    <option value='1' {{ $insured == 1 ? 'selected' : '' }}>Con aseguranza.</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group col-md-12 col-auto">
                             <label for="example-search-input" class="form-control-label">Buscar</label>
-                            <input name="search" class="form-control" type="search" required placeholder="Buscar expedientes..." id="search">
+                            <input name="search" class="form-control" type="search" placeholder="Buscar expedientes..." id="search">
                         </div>
                     </form>
 
@@ -100,7 +120,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $expedientes->links() }}
+                            {{ $expedientes->appends(['search'=>$search, 'perPage'=>$perPage, 'insured'=>$insured])->links() }}
                         </nav>
                     </div>
                 </div>

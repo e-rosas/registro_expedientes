@@ -22,6 +22,8 @@ class CreateExpedientesTable extends Migration
             $table->integer('year_difference');
             $table->text('comments')->nullable();
             $table->boolean('destroyed')->default(0);
+            $table->boolean('insured')->default(0);
+            $table->date('destroyed_at');
             $table->timestamps();
         });
     }

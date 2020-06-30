@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('Expedientes') }}</h3>
                             </div>
                         </div>
-                        <form method="post" action="{{ route('expedientes.list') }}" >
+                        <form method="get" action="{{ route('expedientes.list') }}" >
                             @csrf
                             <div class="row">
                                 {{--  start_date  --}}
@@ -23,7 +23,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="start_date" id="input-start_date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
+                                        <input type="date" name="start" id="input-start_date" class="form-control {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
                                         value="{{ $start->format('Y-m-d') }}" required>
                                     </div>
                                 </div>
@@ -33,10 +33,14 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="end_date" id="input-end_date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
+                                        <input type="date" name="end" id="input-end_date" class="form-control {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
                                         value="{{ $end->format('Y-m-d') }}" required>
                                     </div>
                                 </div>
+                                <div class="col-lg-2">
+                                    <input name="id" value="{{ $id ?? 0 }}" class="form-control" type="numeric" aria-label="id">
+                                </div>
+
                                 {{--  refresh  --}}
                                 <div class="col-md-2 text-right">
                                     <button type="submit" class="btn btn-primary btn-sm">
@@ -50,7 +54,7 @@
                     <div class="card-body">
                         <h2>Cantidad: {{ count($expedientes) }}</h2>
                         @foreach ($expedientes as $expediente)
-                        <p>{{ $expediente->id }}. {{ $expediente->full_name }},{{ $expediente->phone_number ?? '' }}</p>
+                        <p>{{ $expediente->id }}. {{ $expediente->full_name }}</p>
 
                         @endforeach
                     </div>
@@ -59,6 +63,7 @@
                             @csrf
                             <input type="hidden" name="end_date" value="{{ $end->format('Y-m-d') }}">
                             <input type="hidden" name="start_date" value="{{ $start->format('Y-m-d') }}">
+                            <input type="hidden" name="start_date" value="{{ $id }}">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-success btn-block">
                                     Destruir

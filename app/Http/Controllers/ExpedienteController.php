@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PreparePDF;
 use App\Expediente;
 use App\Http\Requests\ExpedienteRequest;
 use App\Http\Requests\UpdateExpedienteRequest;
@@ -15,9 +16,36 @@ class ExpedienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('expedientes.index', ['expedientes' => Expediente::paginate(15)]);
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request->search;
+        }
+
+        if (is_null($request['insured'])) {
+            $insured = 2;
+        } else {
+            $insured = $request['insured'];
+        }
+
+        if ($insured < 2) {
+            $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)->where('insured', $insured)
+                ->paginate($perPage)
+            ;
+        } else {
+            $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)
+                ->paginate($perPage)
+            ;
+        }
+
+        return view('expedientes.index', compact('expedientes', 'perPage', 'search', 'insured'));
     }
 
     /**
@@ -115,36 +143,56 @@ class ExpedienteController extends Controller
         ;
     }
 
-    public function listView()
+    /* public function listView()
     {
         $end = Carbon::today()->addDay();
         $start = Carbon::today()->subWeeks(2);
         $expedientes = $this->getExpedientes($start, $end);
 
         return view('expedientes.lista', compact('expedientes', 'start', 'end'));
-    }
+    } */
 
     public function list(Request $request)
     {
-        $start = new Carbon($request['start_date']);
-        $end = new Carbon($request['end_date']);
+        if (!empty($request['start'] && !empty($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(3);
+        }
 
-        $expedientes = $this->getExpedientes($start, $end);
+        if (!is_null($request->id)) {
+            $id = $request->id;
+        } else {
+            $id = 0;
+        }
 
-        return view('expedientes.lista', compact('expedientes', 'start', 'end'));
+        $expedientes = $this->getExpedientes($start, $end, $id); //>2750
+
+        return view('expedientes.lista', compact('expedientes', 'start', 'end', 'id'));
     }
 
     public function destroyList(Request $request)
     {
-        $start = new Carbon($request['start_date']);
-        $end = new Carbon($request['end_date']);
+        $start = new Carbon($request['start']);
+        $end = new Carbon($request['end']);
 
-        $expedientes = $this->getExpedientes($start, $end);
+        if (!is_null($request->id)) {
+            $id = $request->id;
+        } else {
+            $id = 0;
+        }
 
-        foreach ($expedientes as $expediente) {
+        $expedientes = $this->getExpedientes($start, $end, $id);
+
+        $pdf = new PreparePDF($expedientes);
+
+        return $pdf->list();
+        /* foreach ($expedientes as $expediente) {
             $expediente->destroyed = 1;
             $expediente->save();
-        }
+        } */
 
         return redirect()->route('expedientes.index')->withStatus(__('Expedientes marcados como destruidos exitosamente.'));
     }
@@ -156,9 +204,10 @@ class ExpedienteController extends Controller
         return $now->year - $year;
     }
 
-    private function getExpedientes($start, $end)
+    private function getExpedientes($start, $end, $id)
     {
-        return Expediente::whereBetween('created_at', [$start, $end])
+        return Expediente::whereBetween('created_at', [$start, $end])->where('id', '>=', $id)
+            ->orderBy('full_name', 'ASC')
             ->get()
         ;
     }

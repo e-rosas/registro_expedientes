@@ -31,6 +31,7 @@ class ExpedienteRequest extends FormRequest
             'address' => 'max:255',
             'email' => 'max:180',
             'year' => 'required|numeric',
+            'insured' => 'boolean',
         ];
     }
 }

@@ -21,10 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('expedientes', 'ExpedienteController');
-    Route::post('expedientes/buscar', 'ExpedienteController@search')->name('expedientes.search');
-    Route::post('expedientes/listar', 'ExpedienteController@list')->name('expedientes.list');
+    Route::get('lista', 'ExpedienteController@list')->name('expedientes.list');
     Route::post('expedientes/destruir', 'ExpedienteController@destroyList')->name('expedientes.destruir');
-    Route::any('expedienteslistar', 'ExpedienteController@listView')->name('expedientes.listar');
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
