@@ -35,7 +35,6 @@ class PreparePDF
         view()->share([
             'list' => $list,
         ]);
-
         $pdf = BarryPDF::loadView('pdf.list');
 
         return $pdf->download('expedientes.pdf');
