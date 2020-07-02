@@ -5,7 +5,7 @@
 
     <div class="container-fluid mt--7">
 
-        <div class="row">
+        <div class="form-row">
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
@@ -43,10 +43,20 @@
                                     <option value='1' {{ $insured == 1 ? 'selected' : '' }}>Con aseguranza.</option>
                                 </select>
                             </div>
+                            <div class="col-lg-1 text-right">
+                                <br />
+                                <button name="submit" type="submit" class="btn btn-primary btn-fab btn-icon">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="form-group col-md-12 col-auto">
-                            <label for="example-search-input" class="form-control-label">Buscar</label>
-                            <input name="search" class="form-control" type="search" placeholder="Buscar expedientes..." id="search">
+                        <div class="form-row">
+                            <div class="form-group col-lg-12 col-auto">
+                                <label for="example-search-input" class="form-control-label">Buscar</label>
+                                <input name="search" class="form-control" type="search"
+                                    placeholder="Buscar expedientes..." id="search">
+                            </div>
+
                         </div>
                     </form>
 

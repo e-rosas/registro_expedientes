@@ -68,7 +68,9 @@ class ExpedienteController extends Controller
     public function store(ExpedienteRequest $request)
     {
         $validated = $request->validated();
+        $validated['insured'] = 'on' == $request->insured ? 1 : 0;
         $validated['destroyed'] = 0;
+        $validated['destroyed_at'] = Carbon::today();
         $validated['year_difference'] = $this->calculateYearDifference($validated['year']);
 
         Expediente::create($validated);
@@ -188,11 +190,16 @@ class ExpedienteController extends Controller
 
         $pdf = new PreparePDF($expedientes);
 
-        return $pdf->list();
-        /* foreach ($expedientes as $expediente) {
+        $today = Carbon::today();
+
+        foreach ($expedientes as $expediente) {
             $expediente->destroyed = 1;
+            $expediente->destroyed_at = $today;
+
             $expediente->save();
-        } */
+        }
+
+        return $pdf->list();
 
         return redirect()->route('expedientes.index')->withStatus(__('Expedientes marcados como destruidos exitosamente.'));
     }

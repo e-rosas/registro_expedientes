@@ -15,7 +15,6 @@
                             </div>
                         </div>
                         <form method="get" action="{{ route('expedientes.list') }}" >
-                            @csrf
                             <div class="row">
                                 {{--  start_date  --}}
                                 <div class="col-md-3">
@@ -61,9 +60,9 @@
                     <div class="card-footer">
                         <form method="POST" action="{{ route('expedientes.destruir') }}">
                             @csrf
-                            <input type="hidden" name="end_date" value="{{ $end->format('Y-m-d') }}">
-                            <input type="hidden" name="start_date" value="{{ $start->format('Y-m-d') }}">
-                            <input type="hidden" name="start_date" value="{{ $id }}">
+                            <input type="hidden" name="end" value="{{ $end->format('Y-m-d') }}">
+                            <input type="hidden" name="start" value="{{ $start->format('Y-m-d') }}">
+                            <input type="hidden" name="id" value="{{ $id }}">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-success btn-block">
                                     Destruir

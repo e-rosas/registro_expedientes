@@ -16,14 +16,28 @@ class PreparePDF
 
     public function list()
     {
+        $list = [];
+        $count = count($this->expedientes);
+        $rows = 0;
+        for ($i = 0; $i < $count; $i += 3) {
+            $r = $i % 3;
+            while ($r < 3) {
+                $name = $this->expedientes[$i + $r]->full_name ?? '';
+                if (!empty($name)) {
+                    $list[$rows][$r] = $i + $r + 1 .'. '.$name;
+                } else {
+                    $list[$rows][$r] = '';
+                }
+                ++$r;
+            }
+            ++$rows;
+        }
         view()->share([
-            'expedientes' => $this->expedientes,
+            'list' => $list,
         ]);
 
-        dd($this->expedientes);
+        $pdf = BarryPDF::loadView('pdf.list');
 
-        $list = BarryPDF::loadView('pdf.list');
-
-        return $list->download('expedientes.pdf');
+        return $pdf->download('expedientes.pdf');
     }
 }
