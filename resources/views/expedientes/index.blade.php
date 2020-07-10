@@ -24,7 +24,7 @@
 
                     <form  method="get" action="{{ route('expedientes.index') }}" >
                         <div class="form-row">
-                            <div class="col-lg-2 col-auto">
+                            <div class="col-lg-4 col-auto">
                                 <label for="perPage">{{ __('Cantidad') }}</label>
                                 <select id="quantity" class="custom-select" name="perPage">
                                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }}>15</option>
@@ -35,7 +35,7 @@
                                     <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
                                 </select>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-7">
                                 <label for="insured">{{ __('Aseguranza') }}</label>
                                 <select id='insured' class="custom-select" name="insured">
                                     <option value='2' {{ $insured == 2 ? 'selected' : '' }}>Ambos</option>
@@ -76,13 +76,13 @@
                                 <tr>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de nacimiento</th>
-                                    <th scope="col">Dirección</th>
-                                    <th scope="col">Correo</th>
+                                    {{-- <th scope="col">Dirección</th>
+                                    <th scope="col">Correo</th> --}}
                                     <th scope="col">Teléfono</th>
-                                    <th scope="col">Fecha de destrucción</th>
+                                    {{-- <th scope="col">Fecha de destrucción</th> --}}
                                     <th scope="col">Año</th>
                                     <th scope="col">Diferencia</th>
-                                    <th scope="col">Destruido</th>
+                                    <th scope="col">Llamadas</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -95,17 +95,18 @@
                                             </a>
                                         </td>
                                         <td>{{ $expediente->birth_date->format('Y-m-d') }}</td>
-                                        <td>{{ $expediente->address }}</td>
+                                        {{-- <td>{{ $expediente->address }}</td>
                                         <td>
                                             <a href="mailto:{{$expediente->email}}">{{ $expediente->email }}</a>
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $expediente->phone_number }}</td>
-                                        <td>
+                                        {{-- <td>
                                             {{ $expediente->updated_at->format('Y-m-d') }}
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $expediente->year }}</td>
                                         <td>{{ $expediente->diferencia()}}</td>
-                                        <td>{{ $expediente->destruido() }}</td>
+                                        <td>{{ count($expediente->calls) }}</td>
+                                        {{-- <td>{{ $expediente->destruido() }}</td> --}}
                                         <td class="text-right">
                                             <a class="btn btn-icon btn-info btn-sm" type="button" href="{{route('expedientes.edit', $expediente)}}">
                                                 <span class="btn-inner--icon">

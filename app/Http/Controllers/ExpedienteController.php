@@ -36,11 +36,13 @@ class ExpedienteController extends Controller
         }
 
         if ($insured < 2) {
-            $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)->where('insured', $insured)
+            $expedientes = Expediente::with('calls')->whereLike(['full_name', 'comments'], $search)->where('insured', $insured)
+                ->orderBy('full_name', 'ASC')
                 ->paginate($perPage)
             ;
         } else {
-            $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)
+            $expedientes = Expediente::with('calls')->whereLike(['full_name', 'comments'], $search)
+                ->orderBy('full_name', 'ASC')
                 ->paginate($perPage)
             ;
         }

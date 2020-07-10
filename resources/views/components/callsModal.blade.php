@@ -37,10 +37,10 @@
                                     </div>
                                 </div>
                             </div>
-                                
+
                             <div class="form-row">
                                 <div class="col-lg-12 form-group {{ $errors->has('next-date') ? ' has-danger' : '' }}">
-                                    <label for="date">Fecha de llamada</label>
+                                    <label for="date">Fecha de próxima cita</label>
                                     <input type="date" name="next-date" id="input-next-date" class="form-control {{ $errors->has('next-date') ? ' is-invalid' : '' }}"
                                         value="{{ $today->addMonth()->format('Y-m-d')}}" required>
                                         @if ($errors->has('next-date'))
@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                                
+
                             <div class="text-center">
                                 <button id="save_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
                             </div>
