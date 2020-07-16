@@ -12,6 +12,7 @@ class Call extends Model
         'status',
         'expediente_id',
         'date',
+        'user_id',
     ];
     protected $dates = ['date', 'next_date'];
 
@@ -39,5 +40,10 @@ class Call extends Model
     public function expediente()
     {
         return $this->belongsTo('App\Expediente');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

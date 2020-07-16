@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCallRequest;
 use App\Http\Resources\CallResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CallController extends Controller
 {
@@ -88,6 +89,7 @@ class CallController extends Controller
         $call->comments = $validated['comments'];
         $call->date = $validated['date'];
         $call->expediente_id = $validated['expediente_id'];
+        $call->user_id = Auth::user()->id;
         $call->save();
 
         return $this->expedienteCalls($request->expediente_id);

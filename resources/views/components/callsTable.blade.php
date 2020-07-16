@@ -7,19 +7,21 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Fecha que vendrá</th>
+                <th scope="col">Realizada por</th>
                 <th scope="col">Comentarios</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            
+
             @for ($i = 0; $i < count($calls); $i++)
-                
+
                 <tr>
                     <td>{{ $i+1 }}</td>
                     <td>{{ $calls[$i]->date->format('d-M-Y')}}</td>
                     <td>{{ $calls[$i]->status() }}</td>
                     <td>{{ (0 == $calls[$i]->status) ? $calls[$i]->next_date->format('d-M-Y') : '' }}</td>
+                    <td>{{ $calls[$i]->user->name }}</td>
                     <td>{{ $calls[$i]->comments }}</td>
                     <td class="text-right">
                         <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $calls[$i]->id }})">
@@ -38,6 +40,6 @@
 </div>
 <div class="card-footer py-4">
     <nav class="d-flex justify-content-end" aria-label="...">
-       
+
     </nav>
 </div>

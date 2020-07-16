@@ -14,12 +14,14 @@ class CreateCallsTable extends Migration
         Schema::create('calls', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('expediente_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('number');
             $table->tinyInteger('status')->default(0);
             $table->text('comments')->nullable();
             $table->dateTime('date');
             $table->date('next_date')->nullable();
             $table->foreign('expediente_id')->references('id')->on('expedientes')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

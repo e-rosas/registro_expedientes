@@ -124,6 +124,7 @@
                 + "<td>" + calls[i].date + "</td>"
                 + "<td>" + calls[i].status + "</td>"
                 + "<td>" + calls[i].next_date + "</td>"
+                + "<td>" + calls[i].user + "</td>"
                 + "<td>" + calls[i].comments+ "</td>"
                 +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
                 +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
