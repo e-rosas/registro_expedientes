@@ -125,6 +125,7 @@ class ExpedienteController extends Controller
     {
         $validated = $request->validated();
         $validated['year_difference'] = $this->calculateYearDifference($validated['year']);
+        $validated['insured'] = ('on' == $request->insured) ? 1 : 0;
         $expediente->fill($validated);
         $expediente->save();
 
