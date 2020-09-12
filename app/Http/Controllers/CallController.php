@@ -19,6 +19,8 @@ class CallController extends Controller
      */
     public function index(Request $request)
     {
+        $user_id = $request->user()->id;
+
         if (!is_null($request->perPage)) {
             $perPage = $request->perPage;
         } else {
@@ -45,7 +47,7 @@ class CallController extends Controller
 
         if ($status < 6) {
             $calls = Call::with('expediente')
-                ->where('status', $status)
+                ->where([['status', $status], ['user_id', $user_id]])
                 ->whereBetween('date', [$start, $end])
                 ->whereLike(['number', 'expediente.full_name', 'comments'], $search)
                 ->orderBy('date', 'desc')
@@ -53,6 +55,7 @@ class CallController extends Controller
         ;
         } else {
             $calls = Call::with('expediente')
+                ->where('user_id', $user_id)
                 ->whereBetween('date', [$start, $end])
                 ->whereLike(['number', 'expediente.full_name', 'comments'], $search)
                 ->orderBy('date', 'desc')
