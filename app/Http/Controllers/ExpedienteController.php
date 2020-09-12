@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\PreparePDF;
+use App\Call;
 use App\Expediente;
 use App\Http\Requests\ExpedienteRequest;
 use App\Http\Requests\UpdateExpedienteRequest;
@@ -30,18 +31,18 @@ class ExpedienteController extends Controller
         }
 
         if (is_null($request['insured'])) {
-            $insured = 2;
+            $insured = 1;
         } else {
             $insured = $request['insured'];
         }
 
         if ($insured < 2) {
-            $expedientes = Expediente::with('calls')->whereLike(['full_name', 'comments'], $search)->where('insured', $insured)
+            $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)->where('insured', $insured)
                 ->orderBy('full_name', 'ASC')
                 ->paginate($perPage)
             ;
         } else {
-            $expedientes = Expediente::with('calls')->whereLike(['full_name', 'comments'], $search)
+            $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)
                 ->orderBy('full_name', 'ASC')
                 ->paginate($perPage)
             ;
@@ -85,7 +86,7 @@ class ExpedienteController extends Controller
         $search = $request->search;
 
         $expedientes = Expediente::whereLike(['full_name', 'comments'], $search)
-            ->paginate(10)
+            ->paginate(15)
         ;
 
         return view('expedientes.index', compact('expedientes'));
@@ -96,12 +97,19 @@ class ExpedienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Expediente $expediente)
+    public function show(Expediente $expediente, Request $request)
     {
-        $expediente->load('calls');
+        $user_id = $request->user()->id;
+
+        $calls = Call::with('user')
+            ->where([['expediente_id', $expediente->id], ['user_id', $user_id]])
+            ->orderBy('date', 'desc')
+            ->get()
+        ;
+
         $today = Carbon::today();
 
-        return view('expedientes.show', compact(['expediente', 'today']));
+        return view('expedientes.show', compact(['expediente', 'today', 'calls']));
     }
 
     /**
