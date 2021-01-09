@@ -14,6 +14,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'cash' => env('CASH', false),
+    'nombre' => env('NAME', 'HM -'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

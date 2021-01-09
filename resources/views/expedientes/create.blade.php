@@ -124,12 +124,15 @@
                                     </span>
                                     @endif
                                 </div>
+                                @if (!config('app.cash'))
                                 {{--  Insured  --}}
                                 <div class="custom-control custom-control-alternative custom-checkbox mb-3">
                                     <input type="checkbox" name="insured" id="input-insured"
                                         class="custom-control-input" checked aria-checked="true">
                                     <label class="custom-control-label" for="input-insured">Aseguranza</label>
                                 </div>
+                                @endif
+
                             </div>
                             <div class="form-row">
                                 <div class="form-group{{ $errors->has('comments') ? ' has-danger' : '' }} col-md-12">
