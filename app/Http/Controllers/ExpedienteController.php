@@ -19,6 +19,8 @@ class ExpedienteController extends Controller
      */
     public function index(Request $request)
     {
+        //app()->call('App\Http\Controllers\MailjetController@sendEmail');
+
         if (!is_null($request->perPage)) {
             $perPage = $request->perPage;
         } else {

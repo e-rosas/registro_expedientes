@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -66,6 +65,10 @@ return [
             'channel' => env('MAIL_LOG_CHANNEL'),
         ],
 
+        'mailjet' => [
+            'transport' => 'mailjet',
+        ],
+
         'array' => [
             'transport' => 'array',
         ],
@@ -105,5 +108,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];
