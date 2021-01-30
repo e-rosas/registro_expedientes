@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Email;
-use Illuminate\Http\Request;
+use App\Http\Requests\EmailRequest;
+use App\Http\Requests\UpdateEmailRequest;
 
 class EmailController extends Controller
 {
@@ -14,7 +15,9 @@ class EmailController extends Controller
      */
     public function index()
     {
-        //
+        $emails = Email::with(['campaign', 'expediente'])->orderBy('date', 'desc')->paginate(30);
+
+        return view('emails.index', compact('emails'));
     }
 
     /**
@@ -24,62 +27,66 @@ class EmailController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmailRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Email::create($validated);
+
+        return redirect()->route('emails.create')->withStatus(__('Correo registrado exitosamente.'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Email  $email
      * @return \Illuminate\Http\Response
      */
     public function show(Email $email)
     {
-        //
+        $email->load(['campaign', 'user', 'expediente']);
+
+        return view('emails.show', compact('email'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Email  $email
      * @return \Illuminate\Http\Response
      */
     public function edit(Email $email)
     {
-        //
+        return view('emails.edit', compact('email'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Email  $email
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Email $email)
+    public function update(UpdateEmailRequest $request, Email $email)
     {
-        //
+        $validated = $request->validated();
+
+        $email->fill($validated);
+        $email->save();
+
+        return redirect()->route('emails.edit', compact('email'))
+            ->withStatus(__('Correo modificado exitosamente.'))
+        ;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Email  $email
      * @return \Illuminate\Http\Response
      */
     public function destroy(Email $email)
     {
-        //
     }
 }

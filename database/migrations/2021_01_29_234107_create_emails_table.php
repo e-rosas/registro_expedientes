@@ -15,10 +15,13 @@ class CreateEmailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('expediente_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('campaign_id');
+
             $table->text('comments')->nullable();
             $table->dateTime('date');
             $table->foreign('expediente_id')->references('id')->on('expedientes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
 
             $table->timestamps();
         });

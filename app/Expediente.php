@@ -61,4 +61,9 @@ class Expediente extends Model
     {
         return $this->hasMany('App\Call');
     }
+
+    public function emails()
+    {
+        return $this->hasMany('App\Email');
+    }
 }

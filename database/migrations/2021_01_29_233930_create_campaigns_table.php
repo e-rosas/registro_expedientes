@@ -14,6 +14,7 @@ class CreateCampaignsTable extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('template');
             $table->dateTime('date');
             $table->date('to_date');
             $table->text('comments')->nullable();
